@@ -10,14 +10,14 @@ class ServiceForm
     {
         return $schema
             ->components([
-                \Filament\Forms\Components\Tabs::make('Service')
+                \Filament\Schemas\Components\Tabs::make('Service')
                     ->tabs([
-                        \Filament\Forms\Components\Tabs\Tab::make('General Information')
+                        \Filament\Schemas\Components\Tabs\Tab::make('General Information')
                             ->schema([
                                 \Filament\Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->live(debounce: 500)
-                                    ->afterStateUpdated(fn (\Filament\Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
+                                    ->afterStateUpdated(fn (\Filament\Schemas\Components\Utilities\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state))),
                                 \Filament\Forms\Components\TextInput::make('slug')
                                     ->required()
                                     ->unique(ignoreRecord: true),
@@ -35,14 +35,14 @@ class ServiceForm
                                     ->columnSpanFull(),
                                 \Filament\Forms\Components\FileUpload::make('featured_image')
                                     ->image()
+                                    ->disk('public')
+                                    ->directory('services')
                                     ->required()
                                     ->columnSpanFull(),
-                                \Filament\Forms\Components\FileUpload::make('icon')
-                                    ->image(),
-                                \Filament\Forms\Components\TextInput::make('call_to_action_text'),
+                                                                \Filament\Forms\Components\TextInput::make('call_to_action_text'),
                             ])->columns(2),
 
-                        \Filament\Forms\Components\Tabs\Tab::make('Content Strategy')
+                        \Filament\Schemas\Components\Tabs\Tab::make('Content Strategy')
                             ->schema([
                                 \Filament\Forms\Components\RichEditor::make('full_description')
                                     ->required()
@@ -66,7 +66,7 @@ class ServiceForm
                                     ->columnSpanFull(),
                             ]),
 
-                        \Filament\Forms\Components\Tabs\Tab::make('SEO Configuration')
+                        \Filament\Schemas\Components\Tabs\Tab::make('SEO Configuration')
                             ->schema([
                                 \Filament\Forms\Components\TextInput::make('seo_title')
                                     ->required(),
@@ -76,6 +76,8 @@ class ServiceForm
                                     ->columnSpanFull(),
                                 \Filament\Forms\Components\FileUpload::make('og_image')
                                     ->image()
+                                    ->disk('public')
+                                    ->directory('services')
                                     ->columnSpanFull(),
                             ])->columns(2),
                     ])
