@@ -29,7 +29,7 @@ class PermissionResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->can('manage permissions');
+        return auth()->user()->can('Manage Permissions');
     }
 
     public static function form(Schema $schema): Schema

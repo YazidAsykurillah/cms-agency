@@ -21,10 +21,16 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // create permissions
         $permissions = [
-            'view dashboard',
-            'manage users',
-            'manage roles',
-            'manage permissions',
+            'View Dashboard',
+            'Manage Users',
+            'Manage Roles',
+            'Manage Permissions',
+            'Manage Settings',
+            'View Any Service',
+            'View Service',
+            'Create Service',
+            'Update Service',
+            'Delete Service',
         ];
 
         foreach ($permissions as $permission) {
@@ -32,14 +38,14 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
         // create roles and assign created permissions
-        $superAdminRole = Role::findOrCreate('super-admin');
-        $adminRole = Role::findOrCreate('admin');
-        $userRole = Role::findOrCreate('user');
+        $superAdminRole = Role::findOrCreate('Super Admin');
+        $adminRole = Role::findOrCreate('Admin');
+        $userRole = Role::findOrCreate('Regular');
 
         // Give admin role all permissions
         $adminRole->syncPermissions(Permission::all());
         
-        // Note: super-admin will bypass permissions, usually done via a gate in AuthServiceProvider.
+        // Note: Super Admin will bypass permissions, usually done via a gate in AuthServiceProvider.
         // We will assign the role directly to the user below.
 
         // create demo users

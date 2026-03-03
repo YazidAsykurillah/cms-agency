@@ -267,8 +267,35 @@
                     </svg>
                     <div class="absolute inset-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d]"></div>
                 </div>
+            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
+                <!-- Keep original content intact up to this parent logic, inserting sections underneath main hero -->
+                <!-- Note: As the layout is large SVG based, let's append our block after the hero main layout div closes -->
             </main>
         </div>
+
+        @if(isset($featuredServices) && $featuredServices->count() > 0)
+        <div class="w-full lg:max-w-4xl max-w-[335px] mt-12 mb-12">
+            <h2 class="text-2xl font-semibold mb-6 dark:text-[#EDEDEC]">Featured Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($featuredServices as $service)
+                    <div class="bg-white dark:bg-[#161615] rounded-xl shadow-sm border border-[#e3e3e0] dark:border-[#3E3E3A] overflow-hidden p-6 transition hover:shadow-md">
+                        @if($service->featured_image)
+                            <img src="{{ Storage::url($service->featured_image) }}" alt="{{ $service->name }}" class="w-full h-40 object-cover rounded-md mb-4">
+                        @endif
+                        <h3 class="font-medium text-lg mb-2 dark:text-[#EDEDEC]">{{ $service->name }}</h3>
+                        <p class="text-sm text-[#706f6c] dark:text-[#A1A09A] mb-4">{{ Str::limit($service->short_description, 100) }}</p>
+                        <a href="{{ route('services.show', $service->slug) }}" class="text-[#f53003] dark:text-[#FF4433] text-sm font-medium hover:underline inline-flex items-center">
+                            Learn more 
+                            <svg class="ml-1 w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-8 text-center">
+                <a href="{{ route('services.index') }}" class="inline-block px-6 py-2 bg-[#1b1b18] text-white dark:bg-[#eeeeec] dark:text-[#1C1C1A] rounded-sm text-sm font-medium">View All Services</a>
+            </div>
+        </div>
+        @endif
 
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>

@@ -29,7 +29,7 @@ class RoleResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->can('manage roles');
+        return auth()->user()->can('Manage Roles');
     }
 
     public static function form(Schema $schema): Schema

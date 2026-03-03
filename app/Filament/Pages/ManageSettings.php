@@ -18,7 +18,7 @@ class ManageSettings extends Page implements HasSchemas
 
     public function mount(): void
     {
-        abort_unless(auth()->user()->can('manage_settings'), 403);
+        abort_unless(auth()->user()->can('Manage Settings'), 403);
 
         $settings = \App\Models\Setting::getSettings();
         $this->getSchema('form')->fill($settings->toArray());
@@ -26,7 +26,7 @@ class ManageSettings extends Page implements HasSchemas
 
     public static function canAccess(): bool
     {
-        return auth()->user()->can('manage_settings');
+        return auth()->user()->can('Manage Settings');
     }
 
     public function form(Schema $schema): Schema

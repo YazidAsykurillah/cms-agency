@@ -26,7 +26,7 @@ class UserResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->can('manage users');
+        return auth()->user()->can('Manage Users');
     }
 
     public static function form(Schema $schema): Schema
