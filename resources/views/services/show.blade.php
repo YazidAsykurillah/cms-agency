@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ collect(['seo_title' => $service->seo_title, 'name' => $service->name])->filter()->first() }} | Agency</title>
-    <meta name="description" content="{{ $service->seo_description ?? $service->short_description }}">
-    <meta name="keywords" content="{{ $service->seo_keywords }}">
+    <title>{{ collect(['meta_title' => $service->meta_title, 'name' => $service->name])->filter()->first() }} | Agency</title>
+    <meta name="description" content="{{ $service->meta_description ?? $service->short_description }}">
+    <meta name="keywords" content="{{ $service->meta_keywords }}">
     <style>
         body { font-family: sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; color: #333; line-height: 1.6; }
         img { max-width: 100%; border-radius: 8px; margin-bottom: 2rem; }

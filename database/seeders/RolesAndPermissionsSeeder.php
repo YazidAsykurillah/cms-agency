@@ -31,6 +31,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Create Service',
             'Update Service',
             'Delete Service',
+            'View Any Project',
+            'View Project',
+            'Create Project',
+            'Update Project',
+            'Delete Project',
         ];
 
         foreach ($permissions as $permission) {

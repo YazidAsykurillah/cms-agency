@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Service extends Model
+class Project extends Model
 {
     /**
      * The storage disk used for file uploads.
@@ -15,15 +15,15 @@ class Service extends Model
     /**
      * The attributes that contain file paths.
      */
-    protected static array $fileFields = ['featured_image', 'og_image'];
+    protected static array $fileFields = ['thumbnail'];
 
     protected static function booted(): void
     {
         // Clean up old files when updating
-        static::updating(function (Service $service) {
+        static::updating(function (Project $project) {
             foreach (static::$fileFields as $field) {
-                if ($service->isDirty($field)) {
-                    $oldFile = $service->getOriginal($field);
+                if ($project->isDirty($field)) {
+                    $oldFile = $project->getOriginal($field);
                     if ($oldFile) {
                         Storage::disk(static::$storageDisk)->delete($oldFile);
                     }
@@ -32,36 +32,39 @@ class Service extends Model
         });
 
         // Clean up files when deleting
-        static::deleting(function (Service $service) {
+        static::deleting(function (Project $project) {
             foreach (static::$fileFields as $field) {
-                if ($service->{$field}) {
-                    Storage::disk(static::$storageDisk)->delete($service->{$field});
+                if ($project->{$field}) {
+                    Storage::disk(static::$storageDisk)->delete($project->{$field});
                 }
             }
         });
     }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'title',
         'slug',
-        'short_description',
-        'full_description',
-        'featured_image',
-        'problem_statement',
-        'solution_approach',
-        'process_steps',
-        'faq',
-        'call_to_action_text',
-        'featured',
+        'excerpt',
+        'content',
+        'problem',
+        'solution',
+        'results',
+        'client_name',
+        'industry',
+        'project_year',
+        'thumbnail',
+        'video_url',
+        'service_type',
+        'is_published',
+        'is_featured',
         'meta_title',
         'meta_description',
         'meta_keywords',
-        'og_image',
-        'status',
     ];
 
     /**
@@ -70,8 +73,16 @@ class Service extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'featured' => 'boolean',
-        'process_steps' => 'array',
-        'faq' => 'array',
+        'is_published' => 'boolean',
+        'is_featured' => 'boolean',
     ];
+
+    /**
+     * Get the project's gallery images, ordered by sort_order.
+     */
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class)
+            ->orderBy('sort_order');
+    }
 }

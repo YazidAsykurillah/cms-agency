@@ -68,10 +68,10 @@ class ServiceForm
 
                         \Filament\Schemas\Components\Tabs\Tab::make('SEO Configuration')
                             ->schema([
-                                \Filament\Forms\Components\TextInput::make('seo_title')
+                                \Filament\Forms\Components\TextInput::make('meta_title')
                                     ->required(),
-                                \Filament\Forms\Components\TextInput::make('seo_keywords'),
-                                \Filament\Forms\Components\Textarea::make('seo_description')
+                                \Filament\Forms\Components\TextInput::make('meta_keywords'),
+                                \Filament\Forms\Components\Textarea::make('meta_description')
                                     ->required()
                                     ->columnSpanFull(),
                                 \Filament\Forms\Components\FileUpload::make('og_image')
